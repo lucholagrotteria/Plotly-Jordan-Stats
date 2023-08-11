@@ -10,93 +10,40 @@ def get_data():
 
     return data
 
-def get_points(data):
-    pts_fig = px.bar(
-        title="Michael Jordan's average points per season",
+def create_stats_chart(data, y_column, title, y_label):
+    chart = px.bar(
         data_frame=data,
         x='Season',
-        y='PTS',
+        y=y_column,
+        title=title,
         barmode='group',
         orientation='v',
         width=1500,
         height=600
     )
 
-    pts_fig.update_xaxes(type='category')
-    pts_fig.update_xaxes(title='Season')
-    pts_fig.update_traces(hovertemplate='PTS: %{y}')
+    chart.update_xaxes(type='category')
+    chart.update_xaxes(title='Season')
+    chart.update_traces(hovertemplate=f'{y_label}: %{{y}}')
 
-    return pts_fig
+    return chart
 
-def get_assists(data):
-    ast_fig = px.bar(
-        title="Michael Jordan's average assists per season",
-        data_frame=data,
-        x='Season',
-        y='AST',
-        barmode='group',
-        orientation='v',
-        width=1500,
-        height=600
-    )
-
-    ast_fig.update_xaxes(type='category')
-    ast_fig.update_xaxes(title='Season')
-    ast_fig.update_traces(hovertemplate='AST: %{y}')
-
-    return ast_fig
-
-def get_steals(data):
-    stl_fig = px.bar(
-        title="Michael Jordan's average steals per season",
-        data_frame=data,
-        x='Season',
-        y='STL',
-        barmode='group',
-        orientation='v',
-        width=1500,
-        height=600
-    )
-
-    stl_fig.update_xaxes(type='category')
-    stl_fig.update_xaxes(title='Season')
-    stl_fig.update_traces(hovertemplate='STL: %{y}')
-
-    return stl_fig
-
-def get_blocks(data):
-    blk_fig = px.bar(
-        title="Michael Jordan's average blocks per season",
-        data_frame=data,
-        x='Season',
-        y='BLK',
-        barmode='group',
-        orientation='v',
-        width=1500,
-        height=600
-    )
-
-    blk_fig.update_xaxes(type='category')
-    blk_fig.update_xaxes(title='Season')
-    blk_fig.update_traces(hovertemplate='BLK: %{y}')
-
-    return blk_fig
 
 @views.route('/', methods=['GET'])
 @views.route('/<char_type>', methods=['GET'])
 def home(char_type=None):
-    info = get_data()
+    player_data = get_data()
 
     if char_type == 'PTS':
-        chart = get_points(info)
+        chart = create_stats_chart(player_data, 'PTS', "Michael Jordan's average points per season", 'PTS')
     elif char_type == 'AST':
-        chart = get_assists(info)
+        chart = create_stats_chart(player_data, 'AST', "Michael Jordan's average assists per season", 'AST')
     elif char_type == 'STL':
-        chart = get_steals(info)
+        chart = create_stats_chart(player_data, 'STL', "Michael Jordan's average steals pero season", 'STL')
     elif char_type == 'BLK':
-        chart = get_blocks(info)
+        chart = create_stats_chart(player_data, 'BLK', "Michael Jordan's average blocks per season", 'BLK')
     else:
-        chart = get_points(info)
+        chart = create_stats_chart(player_data, 'PTS', "Michael Jordan's average points per season", 'PTS')
 
     stats_chart = chart.to_html()
 
