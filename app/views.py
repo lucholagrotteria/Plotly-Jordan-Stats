@@ -19,7 +19,8 @@ def create_stats_chart(data, y_column, title, y_label):
         barmode='group',
         orientation='v',
         width=1500,
-        height=600
+        height=600,
+        color_discrete_sequence = ["red"]
     )
 
     chart.update_xaxes(type='category')
