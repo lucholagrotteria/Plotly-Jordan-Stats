@@ -48,22 +48,3 @@ def home(char_type=None):
     stats_chart = chart.to_html()
 
     return render_template('home.html', stats_chart=stats_chart)
-
-# @views.route('/', methods=['GET'])
-# def home():
-#     info = get_data()
-
-#     points_chart = get_points(info)
-#     assists_chart = get_assists(info)
-#     steals_chart = get_steals(info)
-#     blocks_chart = get_blocks(info)
-
-#     points_html = points_chart.to_html()
-#     assists_html = assists_chart.to_html()
-#     steals_html = steals_chart.to_html()
-#     blocks_html = blocks_chart.to_html()
-
-    
-#     return render_template('home.html', 
-#         points_html=points_html, assists_html=assists_html, steals_html = steals_html, blocks_html=blocks_html
-#     )
